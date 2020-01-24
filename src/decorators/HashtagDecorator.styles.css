@@ -1,14 +1,3 @@
 .HashtagDecorator {
     position: relative;
 }
-
-.HashtagDecorator {
-    pointer-events: none;
-    user-select: none;
-}
-
-.Overlay {
-    position: absolute;
-    top: 100%;
-    left: 0;
-}

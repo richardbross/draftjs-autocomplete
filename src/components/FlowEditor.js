@@ -11,7 +11,6 @@ constructor(props) {
   }
 
   render() {
-    console.log(this);
     
     return (
       <Editor

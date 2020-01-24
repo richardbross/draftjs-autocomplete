@@ -11,13 +11,17 @@ const defaultState = {
 };  
 
 const flowReducer = (state = defaultState, action) => {
+  console.log(action);
+  
   switch (action.type) {
 
     case ACTIONS.Types.SET_EDITOR_STATE: {
 
+      const newEditorState = action.payload;
+
       return {
         ...state,
-        editor: action.payload,
+        editor: newEditorState,
       };
     }
 

@@ -22,6 +22,7 @@ export class HashtagDecorator extends React.Component {
         
         this.props.createAutocomplete(this.uuid, {
             rect,
+            decorator: this.props,
             text: this.ref.current.innerText
         });
     }
@@ -35,6 +36,7 @@ export class HashtagDecorator extends React.Component {
         if(this.ref) {
             this.props.updateAutocomplete(this.uuid, {
                 rect,
+                decorator: this.props,
                 text: this.ref.current.innerText
             });
         }
@@ -42,6 +44,9 @@ export class HashtagDecorator extends React.Component {
 
     render() {
         const {props} = this;
+
+        console.log(props, this);
+        
         
         return (
             <span ref={this.ref} className="HashtagDecorator">
