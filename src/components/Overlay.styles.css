@@ -11,6 +11,10 @@
     
     background: white;
     border: 1px solid #b7c6ce;
+
+    max-height: 155px;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
 .Overlay.active {
@@ -30,6 +34,7 @@
     width: 100%;
     text-align: left;
     outline: none;
+    cursor: pointer;
 }
 
 .Overlay li button:hover, .Overlay li.active button {
