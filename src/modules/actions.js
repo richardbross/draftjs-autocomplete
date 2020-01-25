@@ -24,11 +24,11 @@ const Types = {
     payload: state
   });
   
-  const updateAutocomplete = (uuid, ref) => ({
+  const updateAutocomplete = (uuid, state) => ({
     type: Types.UPDATE_AUTOCOMPLETE_REF,
     payload: {
       uuid,
-      ...ref,
+      ...state,
     }
   });
   

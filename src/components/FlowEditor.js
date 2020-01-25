@@ -12,7 +12,7 @@ class FlowEditor extends React.Component {
   }
 
   render() {
-    console.log('render', this.props.editorState);
+    // console.log('render', this.props.editorState);
 
     return (
       <Editor

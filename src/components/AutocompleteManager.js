@@ -23,7 +23,7 @@ class AutocompleteManager extends React.Component {
         {
           props.autocompletes
           && props.autocompletes.map((autocomplete) => (
-            autocomplete.text
+            autocomplete.decorator.decoratedText
             && <Overlay
               editorState={this.props.editorState}
               setEditorState={this.props.setEditorState}

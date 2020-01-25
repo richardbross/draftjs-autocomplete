@@ -12,7 +12,7 @@ const defaultState = {
 };
 
 const flowReducer = (state = defaultState, action) => {
-  console.log(action);
+  // console.log(action);
   
   switch (action.type) {
 
@@ -35,12 +35,13 @@ const flowReducer = (state = defaultState, action) => {
 
     case ACTIONS.Types.UPDATE_AUTOCOMPLETE_REF: {
       
+      
       let index = _.findIndex(state.ui.autocompletes, { uuid: action.payload.uuid });
       
       var newState = produce(state.ui.autocompletes, draftState => {
-        draftState[index].ref = action.payload.ref;
+        draftState[index] = action.payload;
       });
-
+      
       return {
         ...state,
         ui: {

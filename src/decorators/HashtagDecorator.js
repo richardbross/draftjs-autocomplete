@@ -34,11 +34,12 @@ export class HashtagDecorator extends React.Component {
     componentDidUpdate() {
         var rect = this.ref.current.getBoundingClientRect();  
         const { start, end, blockKey, decoratedText } = this.props;
+        
         if(this.ref) {
             this.props.updateAutocomplete(this.uuid, {
                 rect,
                 decorator: { start, end, blockKey, decoratedText },
-                text: this.ref.current.innerText
+                text: decoratedText
             });
         }
     }

@@ -20,7 +20,7 @@ export default class Overlay extends React.Component {
     componentWillMount() {
         
         this.setState({filteredOptions: this.props.options
-            .filter(option => option.includes(this.props.autocomplete.text.toLowerCase().replace(/#/g, ''))) });
+            .filter(option => option.includes(this.props.autocomplete.decorator.decoratedText.toLowerCase().replace(/#/g, ''))) });
             
     }
 
@@ -34,10 +34,12 @@ export default class Overlay extends React.Component {
         this.updateActiveOption(this.state.filteredOptions[0]);
     }
 
-    componentWillReceiveProps() {
+    componentWillReceiveProps(newProps) {
+
+        console.log(newProps.autocomplete.decorator.decoratedText, this.state.filteredOptions);
         
-        this.setState({filteredOptions: this.props.options
-            .filter(option => option.includes(this.props.autocomplete.text.toLowerCase().replace(/#/g, ''))) });
+        this.setState({filteredOptions: newProps.options
+            .filter(option => option.includes(newProps.autocomplete.decorator.decoratedText.toLowerCase().replace(/#/g, ''))) });
     }
 
     componentWillUnmount() {
@@ -61,7 +63,7 @@ export default class Overlay extends React.Component {
         let currentSelection = props.editorState.getSelection();
 
         let contentState = props.editorState.getCurrentContent();
-        console.log(props.autocomplete.decorator);
+        // console.log(props.autocomplete.decorator);
         
         const blockText = props.editorState.getCurrentContent().getBlockMap().get(this.props.autocomplete.decorator.blockKey).get('text');
         

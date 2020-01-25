@@ -1,5 +1,8 @@
 export default [
     '#aaaaaaaaaaaaaaaaaaaaaaaa',
+    '#fish',
+    '#hat',
+    '#ice',
     '#aa',
     '#aa2',
     '#bb',
