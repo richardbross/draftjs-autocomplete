@@ -9,7 +9,6 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
     autocompletes: state.ui.autocompletes,
-    editorSelection: state.editor._immutable.selection,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AutocompleteManager);

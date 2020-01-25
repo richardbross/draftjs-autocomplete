@@ -37,6 +37,6 @@
     cursor: pointer;
 }
 
-.Overlay li button:hover, .Overlay li.active button {
+.Overlay li button:hover, .Overlay li button:focus, .Overlay li.active button {
     background: #d8e9f3;
 }

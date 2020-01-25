@@ -19,10 +19,10 @@ export class HashtagDecorator extends React.Component {
     componentDidMount() {
         this.uuid = uuid();
         var rect = this.ref.current.getBoundingClientRect();    
-        
+        const { start, end, blockKey, decoratedText } = this.props;
         this.props.createAutocomplete(this.uuid, {
             rect,
-            decorator: this.props,
+            decorator: { start, end, blockKey, decoratedText },
             text: this.ref.current.innerText
         });
     }
@@ -32,11 +32,12 @@ export class HashtagDecorator extends React.Component {
     }
 
     componentDidUpdate() {
-        var rect = this.ref.current.getBoundingClientRect();
+        var rect = this.ref.current.getBoundingClientRect();  
+        const { start, end, blockKey, decoratedText } = this.props;
         if(this.ref) {
             this.props.updateAutocomplete(this.uuid, {
                 rect,
-                decorator: this.props,
+                decorator: { start, end, blockKey, decoratedText },
                 text: this.ref.current.innerText
             });
         }
@@ -44,9 +45,6 @@ export class HashtagDecorator extends React.Component {
 
     render() {
         const {props} = this;
-
-        console.log(props, this);
-        
         
         return (
             <span ref={this.ref} className="HashtagDecorator">
