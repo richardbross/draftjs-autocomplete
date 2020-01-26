@@ -23,6 +23,7 @@ export class HashtagDecorator extends React.Component {
         this.props.createAutocomplete(this.uuid, {
             rect,
             decorator: { start, end, blockKey, decoratedText },
+            options,
             text: this.ref.current.innerText
         });
     }
@@ -34,14 +35,15 @@ export class HashtagDecorator extends React.Component {
     componentDidUpdate() {
         var rect = this.ref.current.getBoundingClientRect();  
         const { start, end, blockKey, decoratedText } = this.props;
+        console.log('update to', decoratedText);
         
-        if(this.ref) {
-            this.props.updateAutocomplete(this.uuid, {
-                rect,
-                decorator: { start, end, blockKey, decoratedText },
-                text: decoratedText
-            });
-        }
+        this.props.updateAutocomplete(this.uuid, {
+            rect,
+            decorator: { start, end, blockKey, decoratedText },
+            options,
+            text: decoratedText,
+            overlayActive: true,
+        });
     }
 
     render() {

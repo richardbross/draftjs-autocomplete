@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Provider as ReduxProvider } from "react-redux";
-import FlowEditor from './components/FlowEditor';
-import { EditorState } from 'draft-js';
+import { Editor, EditorState } from 'draft-js';
 import './App.css';
+import 'draft-js/dist/Draft.css'
 
 import configureStore from "./modules/store";
 import AutocompleteManager from './components/AutocompleteManager.hoc';
@@ -14,14 +14,18 @@ function App() {
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty(FlowDecorator))
   
+  let editorRef = useRef(null);
+
   return (
     <div className="App">
       <ReduxProvider store={reduxStore}>
-        <FlowEditor
+        <Editor
+          ref={editorRef}
           editorState={editorState}
-          setEditorState={setEditorState}
-        ></FlowEditor>
+          onChange={setEditorState}
+        ></Editor>
         <AutocompleteManager
+          editor={editorRef}
           editorState={editorState}
           setEditorState={setEditorState}
         ></AutocompleteManager>

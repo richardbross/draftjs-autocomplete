@@ -6,7 +6,7 @@ const Types = {
     SET_EDITOR_STATE: "SET_EDITOR_STATE",
     UPDATE_ACTIVE_OPTION: "UPDATE_ACTIVE_OPTION",
     UPDATE_SELECTED_OPTION: "UPDATE_SELECTED_OPTION",
-    MOVE_CURSOR: "MOVE_CURSOR",
+    SET_ACTIVE_OVERLAY: "SET_ACTIVE_OVERLAY",
   };
   // actions
   const createAutocomplete = (uuid, ref) => ({
@@ -18,11 +18,7 @@ const Types = {
     type: Types.DELETE_AUTOCOMPLETE,
     payload: uuid
   });
-  
-  const setEditorState = state => ({
-    type: Types.SET_EDITOR_STATE,
-    payload: state
-  });
+
   
   const updateAutocomplete = (uuid, state) => ({
     type: Types.UPDATE_AUTOCOMPLETE_REF,
@@ -48,10 +44,11 @@ const Types = {
     }
   });
 
-  const moveCursor = (offset) => ({
-    type: Types.MOVE_CURSOR,
+  const setActiveOverlay = (uuid, active) => ({
+    type: Types.SET_ACTIVE_OVERLAY,
     payload: {
-      offset
+      uuid,
+      active
     }
   });
 
@@ -61,7 +58,6 @@ const Types = {
     updateAutocomplete,
     updateActiveOption,
     updateSelectedOption,
-    setEditorState,
-    moveCursor,
+    setActiveOverlay,
     Types
   };

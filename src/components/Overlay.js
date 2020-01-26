@@ -9,7 +9,6 @@ export default class Overlay extends React.Component {
 
     constructor(props) {
         super(props);
-
     }
 
     state = {
@@ -17,47 +16,53 @@ export default class Overlay extends React.Component {
         filteredOptions: []
     }
 
-    componentWillMount() {
-        
-        this.setState({filteredOptions: this.props.options
-            .filter(option => option.includes(this.props.autocomplete.decorator.decoratedText.toLowerCase().replace(/#/g, ''))) });
-            
+    isOverlayActive = (autocomplete) => {
+      const editorSelection = this.props.editorState.getSelection();
+      return autocomplete.decorator && autocomplete.decorator &&
+        autocomplete.decorator.blockKey === editorSelection.focusKey &&
+        editorSelection.focusOffset >= autocomplete.decorator.start &&
+        editorSelection.focusOffset <= autocomplete.decorator.end;
     }
 
     componentDidMount() {
-        this.keypress = window.addEventListener('keydown', this.handleKeypress);
+        this.keypress = this.ref.addEventListener('keydown', this.handleKeypress);
     
-        if(this.ref && this.ref.current) {
-            this.ref.current.focus();
-        }
-        
-        this.updateActiveOption(this.state.filteredOptions[0]);
+        this.updateActiveOption(this.props.autocomplete.filteredOptions[0]);
     }
 
     componentWillReceiveProps(newProps) {
-
-        console.log(newProps.autocomplete.decorator.decoratedText, this.state.filteredOptions);
         
-        this.setState({filteredOptions: newProps.options
-            .filter(option => option.includes(newProps.autocomplete.decorator.decoratedText.toLowerCase().replace(/#/g, ''))) });
+        this.props.setActive(this.props.autocomplete.uuid, this.isOverlayActive(newProps.autocomplete))
+    }
+    
+    componentWillUpdate() {
+        this.props.setActive(this.props.autocomplete.uuid, this.isOverlayActive(this.props.autocomplete))
+    }
+
+    componentDidUpdate(prevProps, newProps) {
+        if(!prevProps.active && newProps.active) {
+            this.ref.focus();
+        }
     }
 
     componentWillUnmount() {
-        if(this.keypress) {
-            window.removeEventListener(this.keypress);
+        if(this.props.editor && this.props.editor.current) {
+            this.props.editor.current.focus();
         }
+        this.ref.removeEventListener('keydown', this.keypress);
     }
 
     updateActiveOption = (option) => {
         this.props.updateActiveOption(this.props.autocomplete.uuid, option);
-        this.setState({ focusedIndex: this.state.filteredOptions.indexOf(option) })
+        
+        this.setState({ focusedIndex: this.props.autocomplete.filteredOptions.indexOf(option) })
     }
 
     updateSelectedOption = (option) => {
 
-        const { state, setState, props } = this;
+        const { state, props } = this;
 
-        this.setState({ focusedIndex: state.filteredOptions.indexOf(option) })   
+        this.setState({ focusedIndex: props.autocomplete.filteredOptions.indexOf(option) })   
 
         const currentContent = props.editorState.getCurrentContent();
         let currentSelection = props.editorState.getSelection();
@@ -79,11 +84,16 @@ export default class Overlay extends React.Component {
         const insertText = Modifier.replaceText(
             currentContent,
             currentSelection,
-            this.state.filteredOptions[this.state.focusedIndex]
+            this.props.autocomplete.filteredOptions[this.state.focusedIndex]
         );
 
         this.props.setEditorState(EditorState.push(this.props.editorState, insertText, 'insert-characters'));
-
+        
+        this.props.setActive(this.props.autocomplete.uuid, false)
+        
+        setTimeout(() => {    
+            this.props.editor.current.focus();
+        }, 10);
     }
 
     handleArrowpress($event) {
@@ -93,14 +103,14 @@ export default class Overlay extends React.Component {
             case 'Tab':
                 newFocusedIndex = $event.shiftKey
                     ? Math.max(0, this.state.focusedIndex-1) 
-                    : Math.min(this.state.filteredOptions.length-1, this.state.focusedIndex+1);
+                    : Math.min(this.props.autocomplete.filteredOptions.length-1, this.state.focusedIndex+1);
             break;
             case 'ArrowUp':
                 newFocusedIndex = Math.max(0, this.state.focusedIndex-1);
             break;
             case 'ArrowDown':
-                newFocusedIndex = Math.min(this.state.filteredOptions.length-1, this.state.focusedIndex+1);
-            break;
+                newFocusedIndex = Math.min(this.props.autocomplete.filteredOptions.length-1, this.state.focusedIndex+1);
+            break;  
             default:
             break;
 
@@ -108,7 +118,8 @@ export default class Overlay extends React.Component {
                 
         $event.stopPropagation();
         $event.preventDefault();
-        this.updateActiveOption(this.state.filteredOptions[newFocusedIndex]);
+        this.setState({focusedIndex: newFocusedIndex});
+        this.updateActiveOption(this.props.autocomplete.filteredOptions[newFocusedIndex]);
     }
 
     handleKeypress = ($event) => {
@@ -116,12 +127,14 @@ export default class Overlay extends React.Component {
             case 'Tab':
             case 'ArrowUp':
             case 'ArrowDown':
+                // console.log('handling keypress for', this.props.autocomplete.uuid)
                 this.handleArrowpress($event);
                 break;
             case 'Enter':
                 $event.stopPropagation();
                 $event.preventDefault();
-                this.updateSelectedOption(this.state.filteredOptions[this.focusedIndex]);
+                // console.log('handling enter for', this.props.autocomplete.uuid, this.props.autocomplete.filteredOptions[this.focusedIndex])
+                this.updateSelectedOption(this.props.autocomplete.filteredOptions[this.focusedIndex]);
             default:
                 break;
         }
@@ -131,13 +144,16 @@ export default class Overlay extends React.Component {
         const { props } = this;
         // const autocompleteRef = props.autocomplete.ref;
         
+        console.log(this.props.autocomplete);
+        
         return (
-            <ul ref={ref => this.ref = ref} style={{top: props.autocomplete.rect.bottom, left: props.autocomplete.rect.left}} className={classnames({'Overlay': true, active: props.active})}>
-                {this.state.filteredOptions.length > 0 && this.state.filteredOptions
+            <ul tabIndex="1" ref={ref => this.ref = ref} style={{top: props.autocomplete.rect.bottom, left: props.autocomplete.rect.left}} className={classnames({'Overlay': true, active: props.active})}>
+                {this.props.autocomplete.filteredOptions.length > 0 && this.props.autocomplete.filteredOptions
                     .map((option, i) => (
                         <OverlayOption
                             index={i}
                             key={option}
+                            editor={this.props.editor}
                             updateActiveOption={this.updateActiveOption}
                             updateSelectedOption={this.updateSelectedOption}
                             option={option}

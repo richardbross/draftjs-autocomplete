@@ -5,6 +5,7 @@ import AutocompleteManager from './AutocompleteManager';
 const mapDispatchToProps = dispatch => ({
     createAutocomplete: (reference, uuid) => { dispatch(actions.createAutocomplete(reference, uuid)); },
     deleteAutocomplete: (reference, uuid) => { dispatch(actions.deleteAutocomplete(reference, uuid)); },
+    setActiveOverlay: (uuid, bool) => { dispatch(actions.setActiveOverlay(uuid, bool)); },
 });
 
 const mapStateToProps = state => ({

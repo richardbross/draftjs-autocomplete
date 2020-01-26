@@ -21,12 +21,18 @@ export default class OverlayOption extends React.Component {
         
     }
 
+    componentWillReceiveProps(prevProps, nextProps) {
+        if(!prevProps.active && nextProps.active) {
+            this.buttonRef.current.focus();
+        }
+    }
+
     componentDidMount() {
         // console.log(this.props.defaultActive);
         
         if(this.props.defaultActive) {
             this.props.updateActiveOption(this.props.option);
-            this.buttonRef.current.focus()
+            this.buttonRef.current.focus();
         }
     }
 

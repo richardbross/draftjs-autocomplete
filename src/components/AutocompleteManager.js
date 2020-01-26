@@ -6,13 +6,16 @@ import './AutocompleteManager.styles.css';
 import hashtags from '../constants/hashtags';
 
 class AutocompleteManager extends React.Component {
-
-  isOverlayActive = (autocomplete) => {
-    const editorSelection = this.props.editorState.getSelection();
-    return autocomplete.decorator &&
-      autocomplete.decorator.blockKey === editorSelection.focusKey &&
-      editorSelection.focusOffset >= autocomplete.decorator.start &&
-      editorSelection.focusOffset <= autocomplete.decorator.end;
+    
+  setActive = (uuid, active) => {
+    this.props.setActiveOverlay(uuid, active);
+  }
+  
+  componentWillReceiveProps() {
+    const text = this.props.editorState.toJS().currentContent.blockMap[this.props.editorState.toJS().currentContent.selectionAfter.anchorKey].text
+    
+    this.forceUpdate();
+    
   }
   
   render() {
@@ -21,14 +24,14 @@ class AutocompleteManager extends React.Component {
     return (
       <div className="AutocompleteManager">
         {
-          props.autocompletes
-          && props.autocompletes.map((autocomplete) => (
-            autocomplete.decorator.decoratedText
-            && <Overlay
-              editorState={this.props.editorState}
-              setEditorState={this.props.setEditorState}
-              active={this.isOverlayActive(autocomplete)}
+          props.autocompletes.map((autocomplete) => (
+            <Overlay
               key={autocomplete.uuid}
+              active={autocomplete.overlayActive}
+              setActive={this.setActive}
+              editor={props.editor}
+              editorState={props.editorState}
+              setEditorState={props.setEditorState}
               autocomplete={autocomplete}
               options={hashtags}
             />  
