@@ -1,0 +1,11 @@
+.AutocompleteDecorator {
+    position: relative;
+}
+
+.AutocompleteDecorator span {
+    color: #004dff;
+}
+
+.AutocompleteDecorator.NameDecorator span {
+    color: purple;
+}

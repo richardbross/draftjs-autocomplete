@@ -19,7 +19,7 @@ const flowReducer = (state = defaultState, action) => {
       
       var newState = produce(state.ui.autocompletes, draftState => {
         newItem.filteredOptions = newItem.options.filter((option) => {
-          return option.includes(newItem.decorator.decoratedText.toLowerCase().replace(/#/g, ''))
+          return option.value.toLowerCase().includes(newItem.decorator.decoratedText.toLowerCase().replace(/#/g, '').replace(/@/g, ''))
         });
         draftState.push(newItem)
       });
@@ -35,13 +35,14 @@ const flowReducer = (state = defaultState, action) => {
 
     case ACTIONS.Types.SET_ACTIVE_OVERLAY: {
 
-      // console.log(action);
-      
-      
       let index = _.findIndex(state.ui.autocompletes, { uuid: action.payload.uuid });
+
+      if(index === -1) {
+        return state;
+      }
       
       var newState = produce(state.ui.autocompletes, draftState => {
-        draftState[index].overlayActive = action.payload.active;
+        draftState[index].overlayActive = action.payload.overlayActive;
       });
       
       return {
@@ -56,15 +57,19 @@ const flowReducer = (state = defaultState, action) => {
     case ACTIONS.Types.UPDATE_AUTOCOMPLETE_REF: {
       
       let index = _.findIndex(state.ui.autocompletes, { uuid: action.payload.uuid });
-      
-      console.log(action.payload);
+
+      if(index === -1) {
+        return state;
+      }
       
 
       var newState = produce(state.ui.autocompletes, draftState => {
         draftState[index] = action.payload;
+        
         draftState[index].filteredOptions = draftState[index].options.filter((option) => {
-          return option.includes(draftState[index].decorator.decoratedText.toLowerCase().replace(/#/g, ''))
+          return option.value.toLowerCase().includes(draftState[index].decorator.decoratedText.toLowerCase().replace(/#/g, '').replace(/@/g, ''))
         });
+        
       });
       
       return {
@@ -80,8 +85,12 @@ const flowReducer = (state = defaultState, action) => {
       
       let index = _.findIndex(state.ui.autocompletes, { uuid: action.payload.uuid });
 
+      if(index === -1) {
+        return state;
+      }
+
       var newState = produce(state.ui.autocompletes, draftState => {
-        draftState[index].active = action.payload.option;
+        draftState[index].activeOption = action.payload.option;
       });
 
       return {
@@ -97,9 +106,13 @@ const flowReducer = (state = defaultState, action) => {
       
       let index = _.findIndex(state.ui.autocompletes, { uuid: action.payload.uuid });
 
+      if(index === -1) {
+        return state;
+      }
+
       var newState = produce(state.ui.autocompletes, draftState => {
-        draftState[index].selected = action.payload.option;
-        draftState[index].active = action.payload.option;
+        draftState[index].selectedOption = action.payload.option;
+        draftState[index].activeOption = action.payload.option;
       });
 
       return {

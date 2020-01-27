@@ -7,15 +7,8 @@ import hashtags from '../constants/hashtags';
 
 class AutocompleteManager extends React.Component {
     
-  setActive = (uuid, active) => {
-    this.props.setActiveOverlay(uuid, active);
-  }
-  
-  componentWillReceiveProps() {
-    const text = this.props.editorState.toJS().currentContent.blockMap[this.props.editorState.toJS().currentContent.selectionAfter.anchorKey].text
-    
-    this.forceUpdate();
-    
+  setActiveOverlay = (uuid, overlayActive) => {
+    this.props.setActiveOverlay(uuid, overlayActive);
   }
   
   render() {
@@ -27,14 +20,14 @@ class AutocompleteManager extends React.Component {
           props.autocompletes.map((autocomplete) => (
             <Overlay
               key={autocomplete.uuid}
-              active={autocomplete.overlayActive}
-              setActive={this.setActive}
+              overlayActive={autocomplete.overlayActive}
+              setActiveOverlay={this.setActiveOverlay}
               editor={props.editor}
               editorState={props.editorState}
               setEditorState={props.setEditorState}
               autocomplete={autocomplete}
               options={hashtags}
-            />  
+            />
           ))}
       </div>
     );

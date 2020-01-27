@@ -1,21 +1,17 @@
 import React from 'react';
 import AutocompleteDecorator from './AutocompleteDecorator';
 
-export default class HashtagDecorator extends AutocompleteDecorator {
+export default class NameDecorator extends React.Component {
 
     constructor(props) {
         super(props)
     }
 
-    ref = React.createRef();
-
-    uuid;
-
     render() {
         const {props} = this;
         
         return (
-            <span ref={this.ref} className="AutocompleteDecorator HashtagDecorator">
+            <span className="AutocompleteDecorator NameDecorator">
                 {props.children}
             </span>
         );

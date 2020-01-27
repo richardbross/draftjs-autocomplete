@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 
 export default class OverlayOption extends React.Component {
@@ -9,34 +9,9 @@ export default class OverlayOption extends React.Component {
 
     buttonRef;
 
-    state = {
-        focusedIndex: 0,
-        active: false
-    }
-
-    componentWillUpdate(props) {
-        if(!this.props.active && props.active) {
-            // console.log(this.props.index);
-        }
-        
-    }
-
-    componentWillReceiveProps(prevProps, nextProps) {
-        if(!prevProps.active && nextProps.active) {
-            this.buttonRef.current.focus();
-        }
-    }
-
-    componentDidMount() {
-        // console.log(this.props.defaultActive);
-        
-        if(this.props.defaultActive) {
-            this.props.updateActiveOption(this.props.option);
-            this.buttonRef.current.focus();
-        }
-    }
-
     selectOption = () => {
+        console.log('select');
+        
         this.props.updateSelectedOption(this.props.option);
     }
 
@@ -47,19 +22,24 @@ export default class OverlayOption extends React.Component {
     render() {
         const { props } = this;
         // const autocompleteRef = props.autocomplete.ref;
+
+        console.log(this.props.option);
         
         return (
             <li
                 key={props.option}
-                className={classnames({active: this.props.active || this.props.selected})}
+                className={this.props.className}
             >
+                {this.props.option.image &&
+                    <img src={this.props.option.image} />
+                }
                 <button
                     ref={ref => this.buttonRef = ref}
                     onClick={() => this.selectOption()}
                     onFocus={() => this.triggerFocus()}
                     onMouseEnter={() => this.triggerFocus()}
                 >
-                    {props.option}
+                    {props.option.value}
                 </button>
             </li>
         )

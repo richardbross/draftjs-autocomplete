@@ -44,11 +44,11 @@ const Types = {
     }
   });
 
-  const setActiveOverlay = (uuid, active) => ({
+  const setActiveOverlay = (uuid, overlayActive) => ({
     type: Types.SET_ACTIVE_OVERLAY,
     payload: {
       uuid,
-      active
+      overlayActive
     }
   });
 

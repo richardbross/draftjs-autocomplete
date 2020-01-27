@@ -28,6 +28,10 @@
 .Overlay li:not(:last-child) {
     border-bottom: 1px solid #b7c6ce;
 }
+.Overlay li {
+    display: flex;
+}
+
 
 .Overlay li button {
     background: none;
