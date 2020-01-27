@@ -40,6 +40,7 @@ const FlowEditor = ({ autocompletes, setActiveOverlay, updateActiveOption }) => 
       case 'ArrowUp':
         return activeOverlay ? {name: 'focus-prev-option', payload: activeOverlay} : getDefaultKeyBinding($event);
       case 'Enter':
+      case 'Tab':
         return activeOverlay ? {name: 'select-option', payload: activeOverlay} : getDefaultKeyBinding($event);
     }
     
@@ -62,9 +63,7 @@ const FlowEditor = ({ autocompletes, setActiveOverlay, updateActiveOption }) => 
           );
         return 
       case 'select-option':
-        console.log($event.payload);
-        
-          selectOption(editorState, setEditorState, $event.payload)
+        selectOption(editorState, setEditorState, $event.payload)
       break;
     }
   }

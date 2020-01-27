@@ -17,7 +17,7 @@ export function selectOption(editorState, setEditorState, autocomplete) {
         anchorOffset: decorator.start,
     });
 
-    const focusedOption = autocomplete.activeOption.value.replace(/@/g, '');
+    const focusedOption = (autocomplete.activeOption).value;
 
     const paddedReplaceString = 
         (needToAddLeadingSpace ? ' ' : '')

@@ -19,7 +19,7 @@ const flowReducer = (state = defaultState, action) => {
       
       var newState = produce(state.ui.autocompletes, draftState => {
         newItem.filteredOptions = newItem.options.filter((option) => {
-          return option.value.toLowerCase().includes(newItem.decorator.decoratedText.toLowerCase().replace(/#/g, '').replace(/@/g, ''))
+          return option.value.toLowerCase().includes(newItem.decorator.decoratedText.toLowerCase().replace(/#/g, '').replace(/@/g, '').replace(/</g, '').replace(/>/g, ''))
         });
         draftState.push(newItem)
       });
@@ -61,14 +61,20 @@ const flowReducer = (state = defaultState, action) => {
       if(index === -1) {
         return state;
       }
-      
 
       var newState = produce(state.ui.autocompletes, draftState => {
-        draftState[index] = action.payload;
+        draftState[index] = {
+          ...draftState[index],
+          ...action.payload
+        };
         
         draftState[index].filteredOptions = draftState[index].options.filter((option) => {
-          return option.value.toLowerCase().includes(draftState[index].decorator.decoratedText.toLowerCase().replace(/#/g, '').replace(/@/g, ''))
+          return option.value.toLowerCase().includes(draftState[index].decorator.decoratedText.toLowerCase().replace(/#/g, '').replace(/@/g, '').replace(/</g, '').replace(/>/g, ''))
         });
+        
+        draftState[index].activeOption = draftState[index].activeOption
+          ? draftState[index].filteredOptions.find(opt => opt.value === draftState[index].activeOption.value) || draftState[index].filteredOptions[0]
+          : draftState[index].filteredOptions[0];
         
       });
       

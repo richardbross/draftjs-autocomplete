@@ -10,8 +10,6 @@ export default class OverlayOption extends React.Component {
     buttonRef;
 
     selectOption = () => {
-        console.log('select');
-        
         this.props.updateSelectedOption(this.props.option);
     }
 
@@ -33,14 +31,14 @@ export default class OverlayOption extends React.Component {
                 {this.props.option.image &&
                     <img src={this.props.option.image} />
                 }
-                <button
+                <span
                     ref={ref => this.buttonRef = ref}
                     onClick={() => this.selectOption()}
                     onFocus={() => this.triggerFocus()}
                     onMouseEnter={() => this.triggerFocus()}
                 >
                     {props.option.value}
-                </button>
+                </span>
             </li>
         )
     }   

@@ -33,7 +33,7 @@
 }
 
 
-.Overlay li button {
+.Overlay li span {
     background: none;
     border: none;
     padding: .3rem .5rem;
@@ -45,6 +45,6 @@
     cursor: pointer;
 }
 
-.Overlay li button:hover, .Overlay li button:focus, .Overlay li.active button {
+.Overlay li span:hover, .Overlay li span:focus, .Overlay li.active span {
     background: #d8e9f3;
 }

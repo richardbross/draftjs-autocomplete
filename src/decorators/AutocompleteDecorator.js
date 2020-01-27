@@ -30,9 +30,9 @@ export default class AutocompleteDecorator extends React.Component {
         this.props.deleteAutocomplete(this.uuid);
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
 
-        this.updateAutocomplete(this.props);
+        this.updateAutocomplete(prevProps);
     }
 
     updateAutocomplete(prevProps) {

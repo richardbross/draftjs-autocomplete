@@ -4,11 +4,14 @@ import { CompositeDecorator } from 'draft-js';
 import { findWithRegex } from '../utils';
 import HandleDecorator from './HandleDecorator';
 import HashtagDecorator from './HashtagDecorator';
+import RelationDecorator from './RelationDecorator';
 import hashtags from '../constants/hashtags';
 import handles from '../constants/handles';
 import NameDecorator from './NameDecorator';
+import relations from '../constants/relations';
 
 const HANDLE_REGEX = /\@[\w]+/g;
+const RELATION_REGEX = /\<\>[\w]+/g;
 const HASHTAG_REGEX = /\#[\w\u0590-\u05ff]+/g;
 
 function handleStrategy(contentBlock, callback) {
@@ -27,6 +30,10 @@ function namesStrategy(contentBlock, callback) {
 
 function hashtagStrategy(contentBlock, callback) {
     findWithRegex(HASHTAG_REGEX, contentBlock, callback);
+}
+
+function relationStrategy(contentBlock, callback) {
+    findWithRegex(RELATION_REGEX, contentBlock, callback);
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -52,6 +59,13 @@ export const FlowDecorator = new CompositeDecorator([
         component: connect(null, mapDispatchToProps)(HashtagDecorator),
         props: {
             options: hashtags
+        }
+    },
+    {
+        strategy: relationStrategy,
+        component: connect(null, mapDispatchToProps)(RelationDecorator),
+        props: {
+            options: relations
         }
     },
 ]);

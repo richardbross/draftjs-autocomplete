@@ -35,13 +35,12 @@ export default class Overlay extends React.Component {
 
     updateSelectedOption = (option) => {
 
-        const { props: {editorState, setEditorState, autocomplete, setActiveOverlay, editor} } = this;
+        const { props: {editorState, setEditorState, autocomplete, editor} } = this;
 
         selectOption(editorState, setEditorState, autocomplete);
         
         setTimeout(() => {    
             editor.current.focus();
-            setActiveOverlay(autocomplete.uuid, false);
         }, 10);
     }
 
@@ -50,7 +49,6 @@ export default class Overlay extends React.Component {
         
         return (
             <ul
-                tabIndex="1"
                 ref={ref => this.ref = ref}
                 style={{top: props.autocomplete.rect.bottom, left: props.autocomplete.rect.left}}
                 className={classnames({
@@ -72,7 +70,7 @@ export default class Overlay extends React.Component {
                             className={classnames({
                                 active: this.props.autocomplete.activeOption && option.value === this.props.autocomplete.activeOption.value
                         })}>
-                            <button ref={ref => this.ref = ref}>{option}</button>
+                            <span ref={ref => this.ref = ref}>{option}</span>
                         </OverlayOption>
                     ))
                 }
