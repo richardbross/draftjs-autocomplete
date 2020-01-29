@@ -22,7 +22,6 @@ export function selectOption(editorState, setEditorState, autocomplete) {
     const paddedReplaceString = 
         (needToAddLeadingSpace ? ' ' : '')
         + focusedOption
-        + (needToAddTrailingSpace ? ' ' : '');
     
     const insertText = Modifier.replaceText(
         currentContent,
@@ -36,7 +35,7 @@ export function selectOption(editorState, setEditorState, autocomplete) {
 
     setEditorState(draftState);
 
-    const newCursorPosition = decorator.start + paddedReplaceString.length + (!needToAddTrailingSpace ? 1 : 0)
+    const newCursorPosition = decorator.start + paddedReplaceString.length
 
     draftState = EditorState.forceSelection(draftState, selectionState.merge({focusOffset:newCursorPosition, anchorOffset: newCursorPosition}));
 

@@ -20,8 +20,6 @@ export default class OverlayOption extends React.Component {
     render() {
         const { props } = this;
         // const autocompleteRef = props.autocomplete.ref;
-
-        console.log(this.props.option);
         
         return (
             <li

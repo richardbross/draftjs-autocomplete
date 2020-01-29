@@ -12,7 +12,7 @@ const FlowEditor = ({ autocompletes, setActiveOverlay, updateActiveOption }) => 
   const [editorState, setEditorState] = useState(EditorState.createEmpty(FlowDecorator))
 
   const setEditorStateMiddleman = (state) => {
-    const selection = state.getSelection().toJS();
+    const selection = editorState.getSelection().toJS();
     
     autocompletes.forEach(auto => {
       const isFocused = selection.focusKey === auto.decorator.blockKey && auto.decorator.start <= selection.anchorOffset && auto.decorator.end >= selection.anchorOffset;
@@ -24,7 +24,7 @@ const FlowEditor = ({ autocompletes, setActiveOverlay, updateActiveOption }) => 
         );
       }
       
-      setActiveOverlay(auto.uuid, isFocused);
+      setTimeout(() => setActiveOverlay(auto.uuid, isFocused), 20)
     });
 
     setEditorState(state);
