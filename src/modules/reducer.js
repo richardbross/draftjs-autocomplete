@@ -10,6 +10,8 @@ const defaultState = {
 
 const flowReducer = (state = defaultState, action) => {
   console.log(action);
+
+  let newState;
   
   switch (action.type) {
 
@@ -17,7 +19,7 @@ const flowReducer = (state = defaultState, action) => {
 
       let newItem = { ...action.payload, overlayActive: true };
       
-      var newState = produce(state.ui.autocompletes, draftState => {
+      newState = produce(state.ui.autocompletes, draftState => {
         newItem.filteredOptions = newItem.options.filter((option) => {
           return option.value.toLowerCase() !== newItem.decorator.decoratedText.toLowerCase() && option.value.toLowerCase().includes(newItem.decorator.decoratedText.toLowerCase().replace(/#/g, '').replace(/@/g, '').replace(/</g, '').replace(/>/g, ''))
         });
@@ -41,7 +43,7 @@ const flowReducer = (state = defaultState, action) => {
         return state;
       }
       
-      var newState = produce(state.ui.autocompletes, draftState => {
+      newState = produce(state.ui.autocompletes, draftState => {
         draftState[index].overlayActive = action.payload.overlayActive;
       });
       
@@ -62,7 +64,7 @@ const flowReducer = (state = defaultState, action) => {
         return state;
       }
 
-      var newState = produce(state.ui.autocompletes, draftState => {
+      newState = produce(state.ui.autocompletes, draftState => {
         draftState[index] = {
           ...draftState[index],
           ...action.payload
@@ -95,7 +97,7 @@ const flowReducer = (state = defaultState, action) => {
         return state;
       }
 
-      var newState = produce(state.ui.autocompletes, draftState => {
+      newState = produce(state.ui.autocompletes, draftState => {
         draftState[index].activeOption = action.payload.option;
       });
 
@@ -116,7 +118,7 @@ const flowReducer = (state = defaultState, action) => {
         return state;
       }
 
-      var newState = produce(state.ui.autocompletes, draftState => {
+      newState = produce(state.ui.autocompletes, draftState => {
         draftState[index].selectedOption = action.payload.option;
         draftState[index].activeOption = action.payload.option;
       });
@@ -134,7 +136,7 @@ const flowReducer = (state = defaultState, action) => {
     case ACTIONS.Types.DELETE_AUTOCOMPLETE: {
       let index = _.findIndex(state.ui.autocompletes, { uuid: action.payload });
       
-      var newState = produce(state.ui.autocompletes, draftState => {
+      newState = produce(state.ui.autocompletes, draftState => {
         draftState.splice(index, 1);
       });
 

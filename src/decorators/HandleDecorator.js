@@ -2,11 +2,7 @@ import React from 'react';
 import AutocompleteDecorator from './AutocompleteDecorator';
 
 export default class HandleDecorator extends AutocompleteDecorator {
-
-    constructor(props) {
-        super(props)
-    }
-
+    
     ref = React.createRef();
 
     uuid;

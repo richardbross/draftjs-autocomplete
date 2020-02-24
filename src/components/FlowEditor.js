@@ -42,6 +42,7 @@ const FlowEditor = ({ autocompletes, setActiveOverlay, updateActiveOption }) => 
       case 'Enter':
       case 'Tab':
         return activeOverlay ? {name: 'select-option', payload: activeOverlay} : getDefaultKeyBinding($event);
+      default:
     }
     
     return getDefaultKeyBinding($event);
@@ -65,6 +66,7 @@ const FlowEditor = ({ autocompletes, setActiveOverlay, updateActiveOption }) => 
       case 'select-option':
         selectOption(editorState, setEditorState, $event.payload)
       break;
+      default:
     }
   }
   

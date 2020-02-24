@@ -10,7 +10,6 @@ export function selectOption(editorState, setEditorState, autocomplete) {
     const { decorator } = autocomplete
 
     let needToAddLeadingSpace = decorator.start !== 0 && blockText.slice(decorator.start - 1, decorator.start) !== ' ';
-    let needToAddTrailingSpace = decorator.end === blockText.length || blockText.slice(decorator.end, decorator.end + 1) !== ' ';
 
     currentSelection = currentSelection.merge({
         focusOffset: decorator.end,

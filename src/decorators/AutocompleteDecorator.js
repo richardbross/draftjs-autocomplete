@@ -3,11 +3,7 @@ import './AutocompleteDecorator.styles.css';
 import uuid from 'uuid';
 
 export default class AutocompleteDecorator extends React.Component {
-
-    constructor(props) {
-        super(props)
-    }
-
+    
     ref = React.createRef();
 
     uuid;

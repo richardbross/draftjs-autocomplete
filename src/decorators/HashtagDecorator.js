@@ -3,10 +3,6 @@ import AutocompleteDecorator from './AutocompleteDecorator';
 
 export default class HashtagDecorator extends AutocompleteDecorator {
 
-    constructor(props) {
-        super(props)
-    }
-
     ref = React.createRef();
 
     uuid;

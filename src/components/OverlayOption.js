@@ -1,11 +1,6 @@
 import React from 'react';
-import classnames from 'classnames';
 
 export default class OverlayOption extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
 
     buttonRef;
 
@@ -27,7 +22,7 @@ export default class OverlayOption extends React.Component {
                 className={this.props.className}
             >
                 {this.props.option.image &&
-                    <img src={this.props.option.image} />
+                    <img alt="" src={this.props.option.image} />
                 }
                 <span
                     ref={ref => this.buttonRef = ref}

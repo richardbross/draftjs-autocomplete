@@ -6,10 +6,6 @@ import OverlayOption from './OverlayOption';
 
 export default class Overlay extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         focusedIndex: 0,
         filteredOptions: []

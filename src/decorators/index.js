@@ -10,8 +10,11 @@ import handles from '../constants/handles';
 import NameDecorator from './NameDecorator';
 import relations from '../constants/relations';
 
+// eslint-disable-next-line no-useless-escape
 const HANDLE_REGEX = /\@[\w]+/g;
+// eslint-disable-next-line no-useless-escape
 const RELATION_REGEX = /\<\>[\w]+/g;
+// eslint-disable-next-line no-useless-escape
 const HASHTAG_REGEX = /\#[\w\u0590-\u05ff]+/g;
 
 function handleStrategy(contentBlock, callback) {
