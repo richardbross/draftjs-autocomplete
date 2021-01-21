@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "classnames": "^2.2.6",
     "draft-js": "^0.11.4",
-    "immer": "^5.3.2",
+    "immer": "^8.0.1",
     "immutable": "3.8.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
